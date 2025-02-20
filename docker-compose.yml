@@ -1,0 +1,66 @@
+version: '3'
+services:
+    m_web245:
+        image:  stackmagephp/php82-nginx-ubuntu
+        
+        container_name: m_web245
+        ports:
+          - "80:80"
+        volumes:
+          - <PATH_TO_CLONED_FOLDER>/setup:/var/www/html
+          - <PATH_TO_CLONED_FOLDER>/sites-available:/etc/nginx/sites-available
+          - <PATH_TO_CLONED_FOLDER>/cli/php.ini:/etc/php/8.2/cli/php.ini
+          - <PATH_TO_CLONED_FOLDER>/fpm/php.ini:/etc/php/8.2/fpm/php.ini
+          - <PATH_TO_CLONED_FOLDER>/init.sh:/init.sh
+        entrypoint: ["/bin/bash", "-c", "/init.sh && tail -f /dev/null"]       
+        links:
+          - magento_ce_db245
+          - elasticsearch_245_7_9
+        depends_on:
+          - magento_ce_db245
+          - elasticsearch_245_7_9   
+
+        
+    magento_ce_db245:
+        image: mysql:8.0
+        container_name: magento_ce_db245
+        ports:
+          - "3306:3306"
+        environment:
+          - MYSQL_ROOT_PASSWORD=root
+          - MYSQL_DATABASE=magento
+        volumes:
+          - db-data-test:/var/lib/mysql
+    phpmyadmin245:
+        container_name: phpmyadmin245
+        image: phpmyadmin/phpmyadmin:latest
+        environment:
+          - MYSQL_ROOT_PASSWORD=root
+          - PMA_USER=root
+          - PMA_PASSWORD=root
+        ports:
+          - "8080:80"
+        links:
+          - magento_ce_db245:db
+        depends_on:
+          - magento_ce_db245
+    elasticsearch_245_7_9:
+        image: elasticsearch:7.9.3
+        container_name: elasticsearch_245_7_9
+        
+        environment:
+           - "discovery.type=single-node"
+        ulimits:
+          memlock:
+            soft: -1
+            hard: -1
+        volumes:
+          - data01:/usr/share/elasticsearch/data
+        ports:
+          - 9200:9200
+
+volumes:
+    db-data-test:
+        driver: local
+    data01:
+        driver: local
