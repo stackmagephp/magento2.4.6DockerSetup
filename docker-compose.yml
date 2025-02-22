@@ -7,11 +7,11 @@ services:
         ports:
           - "80:80"
         volumes:
-          - <PATH_TO_CLONED_FOLDER>/setup:/var/www/html
-          - <PATH_TO_CLONED_FOLDER>/sites-available:/etc/nginx/sites-available
-          - <PATH_TO_CLONED_FOLDER>/cli/php.ini:/etc/php/8.2/cli/php.ini
-          - <PATH_TO_CLONED_FOLDER>/fpm/php.ini:/etc/php/8.2/fpm/php.ini
-          - <PATH_TO_CLONED_FOLDER>/init.sh:/init.sh
+          - /home/stackmagephp/magento246/setup:/var/www/html
+          - /home/stackmagephp/magento246/sites-available:/etc/nginx/sites-available
+          - /home/stackmagephp/magento246/cli/php.ini:/etc/php/8.2/cli/php.ini
+          - /home/stackmagephp/magento246/fpm/php.ini:/etc/php/8.2/fpm/php.ini
+          - /home/stackmagephp/magento246/init.sh:/init.sh
         entrypoint: ["/bin/bash", "-c", "/init.sh && tail -f /dev/null"]       
         links:
           - magento_ce_db245
