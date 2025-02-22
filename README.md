@@ -52,14 +52,13 @@ magento245
 
 ## 🚀 **Getting Started**
 
-1. Clone Magento 2 source code:
+1. Clone Magento 2 source code into the `setup` folder:
 ```bash
 git clone https://github.com/magento/magento2.git setup
 ```
-
-2. Copy the `docker-compose.yml` file into the root directory.
-
-3. Start Docker services:
+2. Ensure that the `setup` folder is located in the root directory alongside the `docker-compose.yml` file.
+3. Verify that all files and folders are accessible by Docker.
+4. Start Docker services:
 ```bash
 docker-compose up -d
 ```
@@ -88,20 +87,20 @@ docker exec -it m_web245 bash
 
 2. Run Magento installation:
 ```bash
-bin/magento setup:install \
-  --base-url=http://mage246demo.com \
-  --db-host=magento_ce_db245 \
-  --db-name=magento \
-  --db-user=root \
-  --db-password=root \
-  --admin-firstname=Admin \
-  --admin-lastname=User \
-  --admin-email=admin@example.com \
-  --admin-user=admin \
-  --admin-password=admin123 \
-  --language=en_US \
-  --currency=INR \
-  --timezone=Asia/Kolkata \
+bin/magento setup:install \\
+  --base-url=http://mage246demo.com \\
+  --db-host=magento_ce_db245 \\
+  --db-name=magento \\
+  --db-user=root \\
+  --db-password=root \\
+  --admin-firstname=Admin \\
+  --admin-lastname=User \\
+  --admin-email=admin@example.com \\
+  --admin-user=admin \\
+  --admin-password=admin123 \\
+  --language=en_US \\
+  --currency=INR \\
+  --timezone=Asia/Kolkata \\
   --use-rewrites=1
 ```
 
