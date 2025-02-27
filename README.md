@@ -1,6 +1,6 @@
-# Magento 2 Docker Setup
+# Magento 2 Docker Setup (Compatible with Magento 2.4.6 & 2.4.7)
 
-This Docker setup allows you to run **Magento 2** locally using **NGINX**, **PHP 8.2**, **MySQL 8**, **Elasticsearch 7.9.3**, and **PHPMyAdmin**.
+This Docker setup allows you to run **Magento 2** locally using **NGINX**, **PHP 8.2**, **MariaDB 10.6**, **OpenSearch 2.12.0**, and **OpenSearch Dashboards 2.12.0**.
 
 ---
 
@@ -38,7 +38,7 @@ docker-compose --version
 
 ## 📂 **Directory Structure**
 ```plaintext
-magento245
+<CLONED_FOLDER>
 ├── setup               # Magento source code
 ├── sites-available     # NGINX configuration files
 ├── cli
@@ -56,7 +56,7 @@ magento245
 ```bash
 git clone https://github.com/magento/magento2.git setup
 ```
-2. Ensure that the `setup` folder is located in the root directory alongside the `docker-compose.yml` file.
+2. Ensure that the `setup` folder is located in `/home/stackmagephp/magento246_new/` alongside the `docker-compose.yml` file.
 3. Verify that all files and folders are accessible by Docker.
 4. Start Docker services:
 ```bash
@@ -66,15 +66,15 @@ docker-compose up -d
 ---
 
 ## 📦 **Docker Services**
-- **m_web245**: NGINX + PHP 8.2 container
-- **magento_ce_db245**: MySQL 8 database container
-- **phpmyadmin245**: PHPMyAdmin for database management
-- **elasticsearch_245_7_9**: Elasticsearch 7.9.3 for search functionality
+- **m_web247**: NGINX + PHP 8.2 container
+- **magento_ce_db247**: MariaDB 10.6 database container
+- **opensearch_247**: OpenSearch 2.12.0 container
+- **opensearch_dashboards_247**: OpenSearch Dashboards 2.12.0 container
 
 Ports:
 - Magento: **http://mage246demo.com**
-- PHPMyAdmin: **http://localhost:8080**
-- Elasticsearch: **http://localhost:9200**
+- OpenSearch: **http://localhost:9200**
+- OpenSearch Dashboards: **http://localhost:5601**
 
 ---
 
@@ -82,25 +82,25 @@ Ports:
 
 1. Access the container:
 ```bash
-docker exec -it m_web245 bash
+docker exec -it m_web247 bash
 ```
 
 2. Run Magento installation:
 ```bash
-bin/magento setup:install \\
-  --base-url=http://mage246demo.com \\
-  --db-host=magento_ce_db245 \\
-  --db-name=magento \\
-  --db-user=root \\
-  --db-password=root \\
-  --admin-firstname=Admin \\
-  --admin-lastname=User \\
-  --admin-email=admin@example.com \\
-  --admin-user=admin \\
-  --admin-password=admin123 \\
-  --language=en_US \\
-  --currency=INR \\
-  --timezone=Asia/Kolkata \\
+bin/magento setup:install \
+  --base-url=http://mage246demo.com \
+  --db-host=magento_ce_db247 \
+  --db-name=magento \
+  --db-user=root \
+  --db-password=root \
+  --admin-firstname=Admin \
+  --admin-lastname=User \
+  --admin-email=admin@example.com \
+  --admin-user=admin \
+  --admin-password=admin123 \
+  --language=en_US \
+  --currency=INR \
+  --timezone=Asia/Kolkata \
   --use-rewrites=1
 ```
 
@@ -156,21 +156,21 @@ docker ps
 
 - Check logs:
 ```bash
-docker logs m_web245
+docker logs m_web247
 ```
 
 - Restart a container:
 ```bash
-docker restart m_web245
+docker restart m_web247
 ```
 
 ---
 
 ## ⚠️ **Common Issues**
 
-**1. MySQL connection failed:**
+**1. MariaDB connection failed:**
 ```bash
-docker logs magento_ce_db245
+docker logs magento_ce_db247
 ```
 
 **2. Permission denied:**
@@ -180,7 +180,7 @@ chmod -R 777 setup
 
 **3. Magento installation stuck:**
 ```bash
-docker restart m_web245
+docker restart m_web247
 ```
 
 ---
